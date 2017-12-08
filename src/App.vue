@@ -3,7 +3,7 @@
     <h1>Our App</h1>
     <hr>
     <div class="box">
-      <transition name="flip">
+      <transition name="flip" mode="out-in">
         <!--START SCREEN-->
         <app-start-screen
                 v-if="state == 'start'"
@@ -122,6 +122,24 @@ a {
 }
 
   /*animation*/
+.flip-enter{}
 
+.flip-enter-active{
+  animation: flipInX 0.3s linear;
+}
+.flip-leave{}
+.flip-leave-active{
+  animation: flipOutX 0.3s linear;
+}
+
+@keyframes flipInX {
+  from{transform: rotateX(90deg);}
+  to{transform: rotateX(0deg);}
+}
+
+@keyframes flipOutX {
+  from{transform: rotateX(0deg);}
+  to{transform: rotateX(90deg);}
+}
 
 </style>
