@@ -6,7 +6,8 @@
         <hr>
 
         <footer class="footer">
-            <button class="btn btn-primary" @click="$emit('repeat')">Repeat?</button>
+            <button class="btn btn-primary" @click="$emit('onRepeat')">Repeat</button>
+            <button class="btn btn-primary" @click="$emit('onNextLevel')">Next Level</button>
         </footer>
     </div>
 </template>
