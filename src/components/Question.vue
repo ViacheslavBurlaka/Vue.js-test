@@ -10,10 +10,6 @@
                 {{answer}}
             </button>
         </div>
-
-        <footer class="footer">
-            <button class="btn btn-primary" @click="$emit('toStartScreen')">Back</button>
-        </footer>
     </div>
 </template>
 

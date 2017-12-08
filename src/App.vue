@@ -2,6 +2,9 @@
   <div id="app">
     <h1>Our App</h1>
     <hr>
+    <div class="progress" >
+      <div class="progress-bar" :style="progressStyles"></div>
+    </div>
     <div class="box">
       <transition name="flip" mode="out-in">
         <!--START SCREEN-->
@@ -31,7 +34,12 @@
         </app-message>
 
         <!--RESULT SCREEN-->
-        <app-result-screen v-else-if="state == 'results'">
+        <app-result-screen v-else-if="state == 'results'"
+                           :stats="stats"
+                           @repeat="onStart"
+
+
+        >
 
         </app-result-screen>
 
@@ -56,12 +64,17 @@ export default {
       stats: {
           right: 0,
           wrong: 0
-      }
+      },
+      questionsMax: 3,
+
     }
   },
   methods:  {
       onStart() {
-          this.state = 'question'
+          this.state = 'question';
+          this.stats.right = 0;
+          this.stats.wrong = 0;
+
       },
       toStartScreen(){
         this.state = 'start'
@@ -70,19 +83,31 @@ export default {
           this.state = 'message';
           this.message.text = "Good Job!";
           this.message.type = "success";
+          this.stats.right++;
       },
       onErrorAnswer(){
           this.state = 'message';
           this.message.text = "Wrong!";
           this.message.type = "warning";
+          this.stats.wrong++;
+
       },
       toNextQuestion(){
-          this.state='question'
+          if(this.questDone < this.questionsMax){
+              this.state='question'
+          }else{
+              this.state='results'
+          }
       }
   },
   computed: {
       questDone(){
           return this.stats.right + this.stats.wrong;
+      },
+      progressStyles(){
+          return{
+              width: (this.questDone / this.questionsMax * 100) + '%'
+          }
       }
   }
 }
@@ -119,6 +144,13 @@ li {
 
 a {
   color: #42b983;
+}
+
+.progress{
+  margin-bottom: 10px;
+}
+.progress-bar{
+  transition: width 0.8s linear;
 }
 
   /*animation*/
