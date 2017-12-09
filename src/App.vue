@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Our App</h1>
+    <h1>{{appName}}. Level {{level + 1}}</h1>
     <hr>
     <div class="progress" >
       <div class="progress-bar" :style="progressStyles"></div>
@@ -21,6 +21,7 @@
                 @toStartScreen="toStartScreen()"
                 @successAnswer="onSuccessAnswer()"
                 @errorAnswer="onErrorAnswer()"
+                :settings="levels[level]"
         >
         </app-question>
 
@@ -36,7 +37,8 @@
         <!--RESULT SCREEN-->
         <app-result-screen v-else-if="state == 'results'"
                            :stats="stats"
-                           @repeat="onStart"
+                           @onRepeat="onStart"
+                           @onNextLevel="toNextLevel"
 
 
         >
@@ -53,9 +55,9 @@
 <script>
 export default {
   name: 'app',
-
   data () {
     return {
+      appName: "Math Training",
       state: 'start',
       message: {
           type: '',
@@ -66,7 +68,27 @@ export default {
           wrong: 0
       },
       questionsMax: 3,
-
+      level: 0,
+      levels: [
+          {
+              from: 10,
+              to: 40,
+              range: 5,
+              variants: 2
+          },
+          {
+              from: 100,
+              to: 200,
+              range: 20,
+              variants: 4
+          },
+          {
+              from: 500,
+              to: 900,
+              range: 40,
+              variants: 6
+          },
+      ]
     }
   },
   methods:  {
@@ -98,6 +120,15 @@ export default {
           }else{
               this.state='results'
           }
+      },
+      toNextLevel(){
+          this.level++;
+          if(this.level === this.levels.length) {
+              this.onStart();
+              return this.level = 0;
+
+          }
+          this.onStart();
       }
   },
   computed: {

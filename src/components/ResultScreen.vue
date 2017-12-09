@@ -1,5 +1,5 @@
 <template>
-    <div class="alert" :class="alert">
+    <div class="alert">
         <h1>Statistic</h1>
         <span>Success: <b>{{stats.right}}</b></span>
         <span>Wrong: <b>{{stats.wrong}}</b></span>
@@ -7,7 +7,7 @@
 
         <footer class="footer">
             <button class="btn btn-primary" @click="$emit('onRepeat')">Repeat</button>
-            <button class="btn btn-primary" @click="$emit('onNextLevel')">Next Level</button>
+            <button class="btn btn-primary next-level-btn" @click="$emit('onNextLevel')">Next Level</button>
         </footer>
     </div>
 </template>
@@ -22,6 +22,9 @@
 
     .alert{
         text-align: center;
+    }
+    .hidden{
+        display: none;
     }
 
 </style>
